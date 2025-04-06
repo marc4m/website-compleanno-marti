@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-  console.log('[DOMContentLoaded] Inizio');
-
   // Funzione di Scroll Reveal
   function handleScrollReveal() {
     const elements = document.querySelectorAll('.scroll-reveal:not(.revealed)');
@@ -19,62 +17,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function saveUserVote(optionId) {
     localStorage.setItem('userVote', optionId);
-    console.log(`[saveUserVote] Voto salvato in localStorage: ${optionId}`);
   }
 
   function getUserVote() {
-    const vote = localStorage.getItem('userVote');
-    console.log(`[getUserVote] Voto recuperato: ${vote}`);
-    return vote;
+    return localStorage.getItem('userVote');
   }
 
   function saveVote(optionId) {
-    console.log(`[saveVote] Inizio per ${optionId}`);
     saveUserVote(optionId);
 
-    return fetch(scriptURL, {
+    // Aggiorna il contatore localmente prima della richiesta al server
+    const pollOption = document.querySelector(`.poll-option[data-id="${optionId}"]`);
+    const voteCountElement = pollOption.querySelector('.vote-count');
+    const currentCount = parseInt(voteCountElement.dataset.count) || 0;
+    voteCountElement.textContent = `${currentCount + 1} ${currentCount + 1 === 1 ? 'voto' : 'voti'}`;
+    voteCountElement.dataset.count = currentCount + 1;
+
+    fetch(scriptURL, {
       method: "POST",
       body: JSON.stringify({ option: optionId }),
       headers: { "Content-Type": "application/json" },
     })
       .then(response => {
-        console.log(`[saveVote] Risposta ricevuta: ${response.status}`);
-        if (!response.ok) throw new Error('Risposta non OK');
+        if (!response.ok) throw new Error('Errore nella risposta del server');
         return response.json();
       })
       .then(data => {
-        console.log(`[saveVote] Successo:`, data);
-        setTimeout(updateVoteCounts, 1000);
+        console.log('✅ Voto salvato con successo:', data);
+        updateVoteCounts(); // Aggiorna dal server immediatamente
       })
       .catch(error => {
-        console.error(`[saveVote] Errore:`, error);
-        setTimeout(updateVoteCounts, 1000);
+        console.error('❌ Errore nel salvataggio del voto:', error);
+        updateVoteCounts(); // Aggiorna comunque per sincronizzare
       });
   }
 
   function getVotes() {
-    console.log('[getVotes] Inizio');
     return fetch(scriptURL)
       .then(response => {
-        console.log(`[getVotes] Risposta ricevuta: ${response.status}`);
-        if (!response.ok) throw new Error('Risposta non OK');
+        if (!response.ok) throw new Error('Errore nella risposta del server');
         return response.json();
       })
-      .then(data => {
-        console.log('[getVotes] Dati ricevuti:', data);
-        return data;
-      })
+      .then(data => data)
       .catch(err => {
-        console.error('[getVotes] Errore:', err);
+        console.error('❌ Errore nel recupero dei voti:', err);
         return {};
       });
   }
 
   function updateVoteCounts() {
-    console.log('[updateVoteCounts] Inizio');
     getVotes()
       .then(votes => {
-        console.log('[updateVoteCounts] Voti ricevuti:', votes);
         document.querySelectorAll('.poll-option').forEach(option => {
           const optionId = option.dataset.id;
           const voteCount = votes[optionId] || 0;
@@ -84,24 +77,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
           if (optionId === getUserVote()) {
             option.classList.add('selected');
-            option.querySelector('.vote-button').classList.add('voted');
+            option.querySelector('.vote-button').classList.add('votedFAST');
             option.querySelector('.vote-button').textContent = 'Votato';
           }
         });
-        console.log('[updateVoteCounts] Fine');
-      })
-      .catch(err => {
-        console.error('[updateVoteCounts] Errore:', err);
       });
   }
 
   // Inizializzazione
-  console.log('[DOMContentLoaded] Avvio updateVoteCounts');
   updateVoteCounts();
 
   const userVote = getUserVote();
   if (userVote) {
-    console.log('[DOMContentLoaded] Utente ha già votato:', userVote);
     document.querySelectorAll('.vote-button').forEach(btn => {
       btn.classList.add('disabled');
       if (btn.closest('.poll-option').dataset.id === userVote) {
@@ -113,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   document.querySelectorAll('.vote-button').forEach(button => {
     button.addEventListener('click', (event) => {
-      console.log('[vote-button] Click, voto esistente:', getUserVote());
       if (getUserVote()) {
         const toast = document.getElementById('already-vote-toast');
         toast.classList.add('show');
@@ -123,7 +109,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const pollOption = event.target.closest('.poll-option');
       const optionId = pollOption.dataset.id;
-      console.log('[vote-button] Voto per:', optionId);
 
       saveVote(optionId);
 
@@ -142,10 +127,5 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  setInterval(() => {
-    console.log('[setInterval] Aggiornamento periodico');
-    updateVoteCounts();
-  }, 30000);
-
-  console.log('[DOMContentLoaded] Fine');
+  setInterval(updateVoteCounts, 30000);
 });
