@@ -19,7 +19,6 @@
 
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://js.stripe.com/v3/"></script>
   </head>
 
   <body>
@@ -117,30 +116,6 @@
               <p><strong> Martina Barbato</strong></p>
               <p class="gift-text"></p></br>tanto il mio non so se mai lo riceverete</p>
             </div>
-
-            <!-- <div class="gift-options">
-              <div class="custom-amount">
-                <label for="custom-amount">IBAN:</label>
-                <p>IT6736HOOJK7979</p>
-                <label for="custom-amount">INTESTATARIO:</label>
-                <p>Martina Barbato</p>
-              </div> -->
-
-            <!-- <div class="gift-options">
-              <div class="custom-amount">
-                <label for="custom-amount">Inserisci:</label>
-                <div class="input-wrapper">
-                  <span>$</span>
-                  <input type="number" id="custom-amount" placeholder="Inserisci la cifra" min="1">
-                </div>
-              </div>
-
-              <button id="stripe-button" class="stripe-button">
-                <span>Contribute via Stripe</span>
-              </button>
-
-              <p class="payment-note">Secure payment via Stripe. Your contribution will be greatly appreciated!</p>
-            </div> -->
           </div>
         </div>
       </section> 
@@ -206,6 +181,11 @@
               <span class="toast-message">Grazie per aver votato!</span>
             </div>
           </div>
+          <div id="already-vote-toast" class="toast">
+            <div class="toast-content">
+              <span class="toast-message">Hai già votato, non è possibile votare più volte!</span>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -218,7 +198,7 @@
     </footer>
 
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <!-- <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script> -->
     <script src="script.js"></script>
   </body>
 </html>
