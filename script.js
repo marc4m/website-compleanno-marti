@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Ascolta lo scroll per rivelare gli elementi
   window.addEventListener('scroll', handleScrollReveal);
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzB8BJgkN0fKG_5W_nAUyiun4XmQEJWYHB7bYACyzl8Vmzr-nYAElLDzv_enGPWKTHPGw/exec';
+  const scriptURL = 'https://restless-morning-ac56.marcello-quattromani.workers.dev/';
 
   // Per memorizzare quale opzione ha votato l'utente
   function saveUserVote(optionId) {
@@ -31,51 +31,30 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function saveVote(optionId) {
-    // Salviamo l'opzione votata dall'utente
     saveUserVote(optionId);
 
-    // Invia il voto al server
     fetch(scriptURL, {
       method: "POST",
       body: JSON.stringify({ option: optionId }),
       headers: {
-        "Content-Type": "text/plain;charset=utf-8",
-      }
+        "Content-Type": "application/json", // Cambia a application/json
+      },
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Errore nella risposta del server');
-        }
-        return response.text();
-      })
+      .then(response => response.json())
       .then(data => {
         console.log('✅ Voto salvato con successo');
-        // Aggiorna i conteggi dopo un breve ritardo
         setTimeout(updateVoteCounts, 1000);
       })
       .catch(error => {
         console.error('❌ Errore nel salvataggio del voto:', error);
-        // Anche in caso di errore, aggiorniamo i conteggi
         setTimeout(updateVoteCounts, 1000);
       });
   }
 
   function getVotes() {
     return fetch(scriptURL)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Errore nella risposta del server');
-        }
-        return response.text();
-      })
-      .then(text => {
-        try {
-          return JSON.parse(text);
-        } catch (e) {
-          console.error('Errore nel parsing della risposta:', e);
-          return {};
-        }
-      })
+      .then(response => response.json())
+      .then(data => data)
       .catch(err => {
         console.error('❌ Errore nel recupero dei voti:', err);
         return {};
