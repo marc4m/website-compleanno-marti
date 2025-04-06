@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>30 Years of Me: Let's Celebrate in Style</title>
+    <meta name="description" content="Join me for an unforgettable 30th birthday celebration" />
+    <meta name="author" content="Birthday Celebrant" />
+
+    <meta property="og:title" content="30 Years of Me: Let's Celebrate in Style" />
+    <meta property="og:description" content="Join me for an unforgettable 30th birthday celebration" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@lovable_dev" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+
+  <body>
+    <header class="navbar">
+      <div class="container">
+        <div class="navbar-content">
+          <div class="logo">
+            <span class="gradient-text">18+12</span>
+          </div>
+
+          <nav class="nav-links">
+            <ul>
+              <li><a href="#details">Informazioni</a></li>
+              <li><a href="#gift">Regalo</a></li>
+              <li><a href="#poll">Sondaggio</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section id="hero" class="hero">
+        <div class="animated-bg"></div>
+        <div class="container">
+          <div class="hero-content">
+            <div class="party-icon">🎉</div>
+
+            <h1 class="hero-title">
+              <span>I miei 18+12</span>
+              <span>I miei -enti hanno le ore contate...<span class="highlight">e sto organizzando per loro un degno</span></span>
+              <span>saluto</span>
+            </h1>
+
+            <div class="divider"></div>
+
+            <p class="hero-text">
+            Mi consola che voi che state leggendo siete quasi tutti più vecchi di me (e che sembro una giovane fanciulla in erba)
+            </p>
+
+            <a href="#details" class="celebration-button">
+              <span>Informazioni</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="scroll-arrow">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Event Details Section -->
+      <section id="details" class="details-section">
+        <div class="container">
+          <h2 class="section-title scroll-reveal">Siete invitati...</h2>
+          <div class="divider scroll-reveal"></div>
+
+          <div class="details-grid">
+            <div class="detail-card scroll-reveal">
+              <div class="detail-icon">📅</div>
+              <h3>in data</h3>
+              <p>Sabato 12 Aprile (ma ricordate gli auguri il giorno prima)</p>
+            </div>
+
+            <div class="detail-card scroll-reveal">
+              <div class="detail-icon">⏰</div>
+              <h3>alle ore</h3>
+              <p>16:00</p>
+            </div>
+
+            <div class="detail-card scroll-reveal">
+              <div class="detail-icon">📍</div>
+              <h3>nella location di</h3>
+              <p>Casazul<br>Via Miliscola, 181<br> 80078 Pozzuoli NA</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gift Section -->
+      <section id="gift" class="gift-section">
+        <div class="container">
+          <h2 class="section-title scroll-reveal">Regalo</h2>
+          <div class="divider scroll-reveal"></div>
+
+          <div class="gift-content scroll-reveal">
+            <div class="gift-text">
+              <p>Per evitare di farvi pensare e ripensare a cosa regalarmi (qualcuno dice che sono complicata), ho pensato di prendere spunto dagli attuali inviti ai matrimoni:</p>
+              <p class="gift-highlight">IBAN:</p>
+              <p><strong>IT6736HOOJK7979</strong></p>
+              <p class="gift-highlight">INTESTATARIO:</p>
+              <p><strong> Martina Barbato</strong></p>
+              <p class="gift-text"></p></br>tanto il mio non so se mai lo riceverete</p>
+            </div>
+
+            <!-- <div class="gift-options">
+              <div class="custom-amount">
+                <label for="custom-amount">IBAN:</label>
+                <p>IT6736HOOJK7979</p>
+                <label for="custom-amount">INTESTATARIO:</label>
+                <p>Martina Barbato</p>
+              </div> -->
+
+            <!-- <div class="gift-options">
+              <div class="custom-amount">
+                <label for="custom-amount">Inserisci:</label>
+                <div class="input-wrapper">
+                  <span>$</span>
+                  <input type="number" id="custom-amount" placeholder="Inserisci la cifra" min="1">
+                </div>
+              </div>
+
+              <button id="stripe-button" class="stripe-button">
+                <span>Contribute via Stripe</span>
+              </button>
+
+              <p class="payment-note">Secure payment via Stripe. Your contribution will be greatly appreciated!</p>
+            </div> -->
+          </div>
+        </div>
+      </section> 
+
+      <!-- Poll Section -->
+      <section id="poll" class="poll-section">
+        <div class="container">
+          <h2 class="section-title scroll-reveal">Come userò il vostro regalo?</h2>
+          <div class="divider scroll-reveal"></div>
+
+          <div class="poll-options">
+            <div class="poll-option scroll-reveal" data-id="trip">
+              <div class="option-icon">✈️</div>
+              <h3>L'ennesimo viaggio</h3>
+              <p>Perchè non sono mai abbastanza</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+
+            <div class="poll-option scroll-reveal" data-id="cooking">
+              <div class="option-icon">🆔</div>
+              <h3>Cambio paese e identità</h3>
+              <p>Creo un finto documento d'identità in cui ho 20 anni (tanto verrei creduta) e cambio continente</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+
+            <div class="poll-option scroll-reveal" data-id="adventure">
+              <div class="option-icon">✨</div>
+              <h3>Lifting</h3>
+              <p>Nonostante sembri una bambina, le rughe iniziano a farsi vedere.</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+
+            <div class="poll-option scroll-reveal" data-id="marriage">
+              <div class="option-icon">💍</div>
+              <h3>Matrimonio</h3>
+              <p>Ho deciso finalmente di responsabilizzarmi e di fare questo importante passo (AHAHAHAH)</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+
+            <div class="poll-option scroll-reveal" data-id="tattoo">
+              <div class="option-icon">🛋️</div>
+              <h3>Sessioni di terapia</h3>
+              <p>Per affrontare questa crisi di mezza età</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+
+            <div class="poll-option scroll-reveal" data-id="business">
+              <div class="option-icon">💰</div>
+              <h3>Fondo pensionistico</h3>
+              <p>Perchè l'età pensionabile si avvicina</p>
+              <div class="vote-button">Vota</div>
+              <div class="vote-count" data-count="0">0 votes</div>
+            </div>
+          </div>
+
+          <div id="vote-toast" class="toast">
+            <div class="toast-content">
+              <span class="toast-message">Grazie per aver votato!</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; 2025 - 18+12</p>
+        <p class="footer-note">Made with love</p>
+      </div>
+    </footer>
+
+    <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
