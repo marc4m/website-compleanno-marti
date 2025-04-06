@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const pollOption = document.querySelector(`.poll-option[data-id="${optionId}"]`);
     const voteCountElement = pollOption.querySelector('.vote-count');
     const currentCount = parseInt(voteCountElement.dataset.count) || 0;
-    voteCountElement.textContent = `${currentCount + 1} ${currentCount + 1 === 1 ? 'voto' : 'voti'}`;
-    voteCountElement.dataset.count = currentCount + 1;
+    const newCount = currentCount + 1;
+    voteCountElement.textContent = `${newCount} ${newCount === 1 ? 'voto' : 'voti'}`;
+    voteCountElement.dataset.count = newCount;
 
     fetch(scriptURL, {
       method: "POST",
@@ -39,16 +40,21 @@ document.addEventListener('DOMContentLoaded', function () {
       headers: { "Content-Type": "application/json" },
     })
       .then(response => {
-        if (!response.ok) throw new Error('Errore nella risposta del server');
+        if (!response.ok) {
+          // Se la richiesta fallisce, ripristina il conteggio precedente
+          voteCountElement.textContent = `${currentCount} ${currentCount === 1 ? 'voto' : 'voti'}`;
+          voteCountElement.dataset.count = currentCount;
+          throw new Error('Errore nella risposta del server');
+        }
         return response.json();
       })
       .then(data => {
         console.log('✅ Voto salvato con successo:', data);
-        updateVoteCounts(); // Aggiorna dal server immediatamente
+        updateVoteCounts(); // Aggiorna dal server dopo la conferma
       })
       .catch(error => {
         console.error('❌ Errore nel salvataggio del voto:', error);
-        updateVoteCounts(); // Aggiorna comunque per sincronizzare
+        updateVoteCounts(); // Sincronizza comunque
       });
   }
 
@@ -70,15 +76,24 @@ document.addEventListener('DOMContentLoaded', function () {
       .then(votes => {
         document.querySelectorAll('.poll-option').forEach(option => {
           const optionId = option.dataset.id;
-          const voteCount = votes[optionId] || 0;
           const voteCountElement = option.querySelector('.vote-count');
-          voteCountElement.textContent = `${voteCount} ${voteCount === 1 ? 'voto' : 'voti'}`;
-          voteCountElement.dataset.count = voteCount;
+          const localCount = parseInt(voteCountElement.dataset.count) || 0;
+          const serverCount = votes[optionId] || 0;
 
-          if (optionId === getUserVote()) {
-            option.classList.add('selected');
-            option.querySelector('.vote-button').classList.add('votedFAST');
-            option.querySelector('.vote-button').textContent = 'Votato';
+          // Usa il valore più alto tra locale e server per evitare sovrascritture errate
+          const updatedCount = Math.max(localCount, serverCount);
+          voteCountElement.textContent = `${updatedCount} ${updatedCount === 1 ? 'voto' : 'voti'}`;
+          voteCountElement.dataset.count = updatedCount;
+
+          const voteButton = option.querySelector('.vote-button');
+          const userVote = getUserVote();
+          if (userVote) {
+            voteButton.classList.add('disabled');
+            if (optionId === userVote) {
+              option.classList.add('selected');
+              voteButton.classList.add('voted'); // Usa 'voted' coerentemente
+              voteButton.textContent = 'Votato';
+            }
           }
         });
       });
